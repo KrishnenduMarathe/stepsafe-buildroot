@@ -1,1 +1,1 @@
-source $(sort $(wildcard $(BR2_EXTERNAL_stepsafe_PATH)/package/*/Config.in))
+#source $(sort $(wildcard $(BR2_EXTERNAL_stepsafe_PATH)/package/*/Config.in))

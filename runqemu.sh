@@ -1,8 +1,8 @@
 #!/bin/sh
 
-KERNEL=
-DTB=
-ROOTIMG=
+KERNEL=buildroot/output/images/zImage
+DTB=buildroot/output/images/bcm2708-rpi-zero-w.dtb
+ROOTIMG=buildroot/output/images/sdcard.img
 
 if [ ! -e "$KERNEL" ]; then
 	echo "$KERNEL doesn't exist"
@@ -19,15 +19,20 @@ if [ ! -e "$ROOTIMG" ]; then
 	exit 1
 fi
 
+# fix image for nearest 2 power for qemu-system-arm
+# hardcoded for 256
+cp $ROOTIMG sdcard_qemu.img
+qemu-img resize -f raw sdcard_qemu.img 256M
+
 qemu-system-arm \
 	-M raspi0 \
-	-cpu arm1176 \
-	-m 512 -nographic -smp 1 \
+	-nographic \
 	-kernel $KERNEL \
 	-dtb $DTB \
-	-drive format=raw,file=$ROOTIMG,if=none,id=sd \
-	-device sd-card,drive=sd
-	-append "rw console=ttyAMA0 root=/dev/mmcblk0 fsck.repair=yes rootwait" \
-	-netdev user,id=eth0,hostfwd=tcp::10022-:22 \
-	-device virtio-net-device,netdev=eth0
+	-drive format=raw,file=sdcard_qemu.img,if=sd \
+	-serial mon:stdio \
+	-append "rw earlycon=pl011,0x20201000 console=ttyAMA0 root=/dev/mmcblk0p2 rootwait"
+
+# remove padded sdcard
+rm sdcard_qemu.img
 
