@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# send output to display
+exec > /dev/tty1 2>&1
+
+case "$1" in
+	start)
+		echo "-> Starting RPI0W Wifi..."
+
+		modprobe brcmfmac
+		sleep 2
+
+		echo "-> Done!"
+		;;
+	stop)
+		echo "-> no cleanup for wifi"
+		;;
+	*)
+		echo "RPI0W -> Invalid argument passed"
+		exit 1
+		;;
+esac
+
+exit 0

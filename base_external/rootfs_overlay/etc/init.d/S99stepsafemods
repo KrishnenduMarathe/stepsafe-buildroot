@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# send output to display
+exec > /dev/tty1 2>&1
+
+case "$1" in
+	start)
+		echo "-> Starting stepsafe init"
+
+		echo "disable power save on wifi"
+		iw dev wlan0 set power_save off
+
+		echo "IP address is:"
+		ip addr show wlan0
+
+		wget -q http://google.com -O /dev/null && echo "device connected to internet" || echo "device not connected"
+		ps | grep -E "[s]shd|[d]ropbear" > /dev/null && echo "SSH is running" || echo "SSH is not running"
+
+		echo "-> Done!"
+		;;
+
+	stop)
+		echo "-> No need to close stepsafe init"
+		;;
+
+	*)
+		echo "-> Unexpected arg for stepsafe init"
+		exit 1
+		;;
+esac
+
+exit 0
+
