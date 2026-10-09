@@ -5,18 +5,29 @@ exec > /dev/tty1 2>&1
 
 case "$1" in
 	start)
-		echo "-> Starting stepsafe init"
+		echo "Starting stepsafe init..."
 
-		echo "disable power save on wifi"
+		echo "-> disable power save on wifi"
 		iw dev wlan0 set power_save off
 
-		echo "IP address is:"
+		echo "-> IP address is:"
 		ip addr show wlan0
 
-		wget -q http://google.com -O /dev/null && echo "device connected to internet" || echo "device not connected"
-		ps | grep -E "[s]shd|[d]ropbear" > /dev/null && echo "SSH is running" || echo "SSH is not running"
+		wget -q http://google.com -O /dev/null && echo "-> device connected to internet" || echo "-> device not connected"
+		ps | grep -E "[s]shd|[d]ropbear" > /dev/null && echo "-> SSH is running" || echo "-> SSH is not running"
 
-		echo "-> Done!"
+		#while true; do
+		#	clear
+		#	echo "Debug Tests:"
+		#	date
+		#	uptime
+		#	free -m
+		#	iw dev wlan0 link
+		#	echo "wpa_cli tests:"
+		#	ps | grep -i -E "wpa|udhcpc"
+		#	wpa_cli -i wlan0 status
+		#	sleep 5
+		#done &
 		;;
 
 	stop)
