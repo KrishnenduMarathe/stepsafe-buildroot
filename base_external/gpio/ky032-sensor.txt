@@ -1,0 +1,13 @@
+Sensor: KY032 avoidance sensor
+Pins: 4 
+- Pin 'EN': enable/disable pin
+- Pin 'VCC': 3-5V power source
+- Pin 'OUT': digital signal. low if detected
+- Pin 'GND': ground pin
+
+Config:
+- Pin 'GND' to Pin 6
+- Pin 'VCC' to Pin 1
+- Pin 'EN' to Pin 16
+- Pin 'OUT' to Pin 7
+

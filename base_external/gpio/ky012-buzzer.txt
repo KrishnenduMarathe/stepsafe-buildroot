@@ -1,0 +1,9 @@
+Sensor: KY012 Buzzer Sensor
+Pins: 3
+- Pin 'S': 3-5V power source
+- Pin '-': GND ground pin
+
+Config:
+- Pin 'S' to Pin 11
+- Pin '-' to Pin 9
+
