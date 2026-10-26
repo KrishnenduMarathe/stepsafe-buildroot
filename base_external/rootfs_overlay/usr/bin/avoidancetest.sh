@@ -1,19 +1,14 @@
 #!/bin/sh
 
-EN_PIN=23
 OUT_PIN=4
 
 clean_exit() {
 	echo "Exiting..."
-	raspi-gpio set $EN_PIN op dl
 	exit 0
 }
 
 # ctrl-c detector
 trap clean_exit INT
-
-echo "Enabling sensor..."
-raspi-gpio set $EN_PIN op dh
 
 echo "Configuring output..."
 raspi-gpio set $OUT_PIN ip
